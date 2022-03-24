@@ -1,0 +1,43 @@
+/*
+ * @Author: lhq
+ * @Date: 2022-03-24 09:24:04
+ * @LastEditors: lhq
+ * @LastEditTime: 2022-03-24 16:32:14
+ * @Description: file content
+ */
+const { Schema, model } = require('mongoose')
+const base = require('./base')
+const {{name}}Schema = Schema({
+  ...base,
+  slug: {
+    type: String,
+    default: null
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  tagList: {
+    type: [String]
+  },
+  body: {
+    type: String,
+    required: true
+  },
+  favorited: {
+    type: Boolean,
+    default: null
+  },
+  favoritesCount: {
+    type: Number,
+    default: 0
+  }
+})
+
+const {{properCase name}} = model('{{properCase name}}', {{name}}Schema)
+
+module.exports = {{properCase name}}

@@ -1,0 +1,73 @@
+const { {{properCase name}} } = require('../model/{{name}}')
+exports.get{{properCase name}}s = async (req, res, next) => {
+  try {
+    const {
+      limit = 10,
+      offset = 0
+    } = req.query
+    const query = {}
+    const {{name}}s = await {{properCase name}}.find(query)
+      .skip(Number(offset))
+      .limit(Number(limit))
+    const {{name}}sCount = await {{properCase name}}.count(query)
+    res.status(200).json({
+      {{name}}s,
+      {{name}}sCount
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.get{{properCase name}} = async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const {{name}} = await {{properCase name}}.findOne({ _id: id })
+    res.status(200).json({
+      {{name}}
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.add{{properCase name}} = async (req, res, next) => {
+  try {
+    const {{name}} = new {{properCase name}}(req.body.{{name}})
+    await {{name}}.save()
+    res.status(200).json({
+      {{name}}
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.update{{properCase name}} = async (req, res, next) => {
+  try {
+    const {{name}} = req.{{name}}
+    const client{{properCase name}} = req.body.{{name}}
+    {{name}}.title = client{{properCase name}}.title || {{name}}.title
+    {{name}}.description = client{{properCase name}}.description || {{name}}.description
+    {{name}}.body = client{{properCase name}}.body || {{name}}.body
+    await {{name}}.save()
+    res.status(200).json({
+      {{name}}
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.del{{properCase name}} = async (req, res, next) => {
+  try {
+    const id = req.params.id
+    await {{properCase name}}.deleteOne({ _id: id })
+    res.status(200).json({
+      code: 1,
+      msg: '删除成功'
+    })
+  } catch (err) {
+    next(err)
+  }
+}

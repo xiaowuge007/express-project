@@ -2,14 +2,13 @@
  * @Author: lhq
  * @Date: 2022-03-24 15:58:52
  * @LastEditors: lhq
- * @LastEditTime: 2022-03-24 17:52:33
+ * @LastEditTime: 2022-03-24 18:28:14
  * @Description: file content
  */
 const rimraf = require('rimraf')
 const { promisify } = require('util')
 const path = require('path')
 const del = promisify(rimraf)
-
 const getlist = () => {
   return [
     // controller 控制器

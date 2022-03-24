@@ -1,0 +1,33 @@
+const { body } = require('express-validator')
+const { validateAll } = require('../middleware/validate')
+const { validateId } = require('../validator/common')
+const {{properCase name}} = require('../model/{{name}}')
+
+exports.add{{properCase name}} = validateAll([
+  body('{{name}}.title').notEmpty().withMessage('文章标题不能为空'),
+  body('{{name}}.body').notEmpty().withMessage('文章内容不能为空'),
+  body('{{name}}.description').notEmpty().withMessage('文章简介不能为空')
+])
+
+exports.get{{properCase name}} = validateId
+
+exports.update{{properCase name}} = [
+  validateId,
+  async (req, res, next) => {
+    const id = req.params.id
+    const {{name}} = await {{properCase name}}.findById(id)
+    if (!{{name}}) {
+      return res.status(404).end()
+    }
+    req.{{name}} = {{name}}
+    next()
+  },
+  // 判断当前用户是否为创建者
+  async (req, res, next) => {
+    if (req.user.userId.toString() !== req.{{name}}.author.toString()) {
+      return res.status(403).end()
+    }
+    next()
+  }
+]
+exports.del{{properCase name}} = exports.update{{properCase name}}
